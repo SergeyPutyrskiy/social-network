@@ -1,0 +1,30 @@
+{
+  "name": "express-social-network",
+  "version": "0.0.1",
+  "description": "Social network using express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeyPutyrskiy/express-social-network.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "Social network",
+    "NodeJS",
+    "Express",
+    "PostgreSQL"
+  ],
+  "author": "Sergey Putyrskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SergeyPutyrskiy/express-social-network/issues"
+  },
+  "homepage": "https://github.com/SergeyPutyrskiy/express-social-network#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
