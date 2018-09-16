@@ -26,6 +26,7 @@
   "homepage": "https://github.com/SergeyPutyrskiy/express-social-network#readme",
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.2.1",
     "pg": "^7.4.2",
