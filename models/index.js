@@ -1,12 +1,13 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('socialnetwork', 'postgres', '123456', {
-  host: 'localhost',
-  dialect: 'postgres',
+const Sequelize = require("sequelize");
+
+const sequelize = new Sequelize("socialnetwork", "postgres", "123456", {
+  host: "localhost",
+  dialect: "postgres",
   port: 5432
 });
 const models = {
-  User: sequelize.import('./user'),
-  Token: sequelize.import('./token'),
+  User: sequelize.import("./user"),
+  Token: sequelize.import("./token")
 };
 
 Object.keys(models).forEach(modelName => {

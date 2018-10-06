@@ -1,37 +1,40 @@
-const express = require('express');
+const express = require("express");
+
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const checkToken = (req, res, next) => {
-  const bearerHeader = req.headers['authorization'];
+  const bearerHeader = req.headers.authorization;
 
-  if(bearerHeader === undefined) {
+  if (bearerHeader === undefined) {
     res.status(403).json({
       error: {
-        name: 'AuthorizationHeaderError',
-        message: "Authorization header wasn't provided",
-      },
+        name: "AuthorizationHeaderError",
+        message: "Authorization header wasn't provided"
+      }
     });
   } else {
-    const bearer = bearerHeader.split(' ');
+    const bearer = bearerHeader.split(" ");
 
     req.token = bearer[1];
     next();
   }
 };
 
-router.get('/', checkToken, (req, res) => {
-  jwt.verify(req.token, 'devSecretKey', (err, authData) => {
+router.get("/", checkToken, (req, res) => {
+  jwt.verify(req.token, "devSecretKey", (err, authData) => {
     if (err) {
       const { name, message } = err;
-      res.status(401).json({ error: {
+      res.status(401).json({
+        error: {
           name,
-          message,
-        } });
+          message
+        }
+      });
     } else {
       res.json({
-        routeName: 'profile',
-        authData,
+        routeName: "profile",
+        authData
       });
     }
   });
