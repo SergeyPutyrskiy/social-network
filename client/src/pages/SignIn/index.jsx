@@ -11,10 +11,22 @@ class SignIn extends React.PureComponent {
     console.log(this.state);
   };
 
+  handleInputChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
-        <SignInForm formData={this.state} />
+        <SignInForm
+          formData={this.state}
+          handleInputChange={this.handleInputChange}
+          submitForm={this.handleSubmit}
+        />
       </React.Fragment>
     );
   }
