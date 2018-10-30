@@ -26,6 +26,7 @@
     "flow": "flow"
   },
   "devDependencies": {
+    "babel-eslint": "8",
     "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.1.0",
@@ -46,6 +47,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
       "prettier --write",
+      "eslint --fix",
       "git add"
     ]
   }

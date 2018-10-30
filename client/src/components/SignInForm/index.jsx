@@ -1,4 +1,14 @@
+// @flow
 import React from "react";
+
+type Props = {
+  formData: {
+    email: number,
+    password: string
+  },
+  submitForm: Function,
+  handleInputChange: Function
+};
 
 const SignInForm = ({ formData, submitForm, handleInputChange }: Props) => (
   <div>
