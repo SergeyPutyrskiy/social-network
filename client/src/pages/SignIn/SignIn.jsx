@@ -1,5 +1,6 @@
+// @flow
 import React from "react";
-import SignInForm from "../../components/SignInForm";
+import SignInForm from "./SignInForm";
 
 class SignIn extends React.PureComponent {
   state = {
@@ -25,7 +26,7 @@ class SignIn extends React.PureComponent {
         <SignInForm
           formData={this.state}
           handleInputChange={this.handleInputChange}
-          submitForm={this.handleSubmit}
+          handleSubmit={this.handleSubmit}
         />
       </React.Fragment>
     );
