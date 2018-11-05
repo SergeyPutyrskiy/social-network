@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
+import "./SignUp.css";
+
 type Props = {
   formData: {
     userName: string,
@@ -22,7 +24,13 @@ const SignUpForm = ({
   handleSubmit
 }: Props) => (
   <form className="root" noValidate autoComplete="off">
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justify="center"
+      className="full-page-wrapper"
+    >
       <TextField
         id="userName"
         label="UserName"
