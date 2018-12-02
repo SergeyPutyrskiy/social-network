@@ -9,12 +9,12 @@ const models = require("../../models/index");
 router.post("/", (req, res) => {
   const {
     password: passwordFromRequest,
-    userName: userNameFromRequest
+    email: emailNameFromRequest
   } = req.body;
 
   models.User.findOne({
     where: {
-      userName: userNameFromRequest
+      email: emailNameFromRequest
     }
   })
     .then(user => {
