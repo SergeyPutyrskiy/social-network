@@ -41,10 +41,12 @@ router.post("/", (req, res) => {
                 { expiresIn: "300s" },
                 (err, accessToken) => {
                   res.json({
-                    routeName: "signin",
-                    user: userInfo,
-                    accessToken,
-                    refreshToken
+                    data: {
+                      routeName: "signin",
+                      user: userInfo,
+                      accessToken,
+                      refreshToken
+                    }
                   });
                 }
               );

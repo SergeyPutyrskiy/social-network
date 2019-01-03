@@ -1,8 +1,14 @@
 // @flow
 import React from "react";
-import SignUpForm from "./SignUpForm";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-type Props = {};
+import SignUpForm from "./SignUpForm";
+import { signUpStart } from "../../middleware/signup/actions";
+
+type Props = {
+  signUpStart: Function
+};
 
 type State = {
   userName: string,
@@ -30,8 +36,8 @@ class SignUp extends React.PureComponent<Props, State> {
   };
 
   handleSubmit = () => {
-    console.log(this.state);
-    // axios.post('http://localhost:3000/signup', this.state);
+    const { signUpStart } = this.props;
+    signUpStart(this.state);
   };
 
   render() {
@@ -47,4 +53,10 @@ class SignUp extends React.PureComponent<Props, State> {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ signUpStart }, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignUp);

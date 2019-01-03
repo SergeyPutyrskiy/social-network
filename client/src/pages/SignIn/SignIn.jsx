@@ -1,15 +1,29 @@
 // @flow
 import React from "react";
-import SignInForm from "./SignInForm";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-class SignIn extends React.PureComponent {
+import SignInForm from "./SignInForm";
+import { signInStart } from "../../middleware/signin/actions";
+
+type Props = {
+  signInStart: Function
+};
+
+type State = {
+  email: string,
+  password: string
+};
+
+class SignIn extends React.PureComponent<Props, State> {
   state = {
-    email: "serg@mail.com",
+    email: "john.hulk@mail.com",
     password: "1234"
   };
 
   handleSubmit = () => {
-    console.log(this.state);
+    const { signInStart } = this.props;
+    signInStart(this.state);
   };
 
   handleInputChange = e => {
@@ -33,4 +47,14 @@ class SignIn extends React.PureComponent {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ signInStart }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn);
