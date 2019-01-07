@@ -5,7 +5,9 @@ const signup = require('./routes/signup');
 const signin = require('./routes/signin');
 const profile = require('./routes/profile');
 const token = require('./routes/token');
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

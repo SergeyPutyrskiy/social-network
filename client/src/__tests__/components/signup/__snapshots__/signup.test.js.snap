@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Signup /> renders correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Signup />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <label
+          htmlFor="userName"
+>
+          User name:
+</label>,
+        <input
+          id="userName"
+          name=""
+          type="text"
+/>,
+        <label
+          htmlFor="firstName"
+>
+          First name:
+</label>,
+        <input
+          id="firstName"
+          name=""
+          type="text"
+/>,
+        <label
+          htmlFor="lastName"
+>
+          Last name:
+</label>,
+        <input
+          id="lastName"
+          name=""
+          type="text"
+/>,
+        <label
+          htmlFor="email"
+>
+          Email:
+</label>,
+        <input
+          id="email"
+          name=""
+          type="email"
+/>,
+        <label
+          htmlFor="password"
+>
+          Password:
+</label>,
+        <input
+          id="password"
+          name=""
+          type="password"
+/>,
+        <button
+          onClick={[Function]}
+>
+          Sign Up
+</button>,
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "User name:",
+          "htmlFor": "userName",
+        },
+        "ref": null,
+        "rendered": "User name:",
+        "type": "label",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "id": "userName",
+          "name": "",
+          "type": "text",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "input",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "First name:",
+          "htmlFor": "firstName",
+        },
+        "ref": null,
+        "rendered": "First name:",
+        "type": "label",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "id": "firstName",
+          "name": "",
+          "type": "text",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "input",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Last name:",
+          "htmlFor": "lastName",
+        },
+        "ref": null,
+        "rendered": "Last name:",
+        "type": "label",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "id": "lastName",
+          "name": "",
+          "type": "text",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "input",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Email:",
+          "htmlFor": "email",
+        },
+        "ref": null,
+        "rendered": "Email:",
+        "type": "label",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "id": "email",
+          "name": "",
+          "type": "email",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "input",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Password:",
+          "htmlFor": "password",
+        },
+        "ref": null,
+        "rendered": "Password:",
+        "type": "label",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "id": "password",
+          "name": "",
+          "type": "password",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "input",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Sign Up",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": "Sign Up",
+        "type": "button",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <label
+            htmlFor="userName"
+>
+            User name:
+</label>,
+          <input
+            id="userName"
+            name=""
+            type="text"
+/>,
+          <label
+            htmlFor="firstName"
+>
+            First name:
+</label>,
+          <input
+            id="firstName"
+            name=""
+            type="text"
+/>,
+          <label
+            htmlFor="lastName"
+>
+            Last name:
+</label>,
+          <input
+            id="lastName"
+            name=""
+            type="text"
+/>,
+          <label
+            htmlFor="email"
+>
+            Email:
+</label>,
+          <input
+            id="email"
+            name=""
+            type="email"
+/>,
+          <label
+            htmlFor="password"
+>
+            Password:
+</label>,
+          <input
+            id="password"
+            name=""
+            type="password"
+/>,
+          <button
+            onClick={[Function]}
+>
+            Sign Up
+</button>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "User name:",
+            "htmlFor": "userName",
+          },
+          "ref": null,
+          "rendered": "User name:",
+          "type": "label",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "id": "userName",
+            "name": "",
+            "type": "text",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "input",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "First name:",
+            "htmlFor": "firstName",
+          },
+          "ref": null,
+          "rendered": "First name:",
+          "type": "label",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "id": "firstName",
+            "name": "",
+            "type": "text",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "input",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Last name:",
+            "htmlFor": "lastName",
+          },
+          "ref": null,
+          "rendered": "Last name:",
+          "type": "label",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "id": "lastName",
+            "name": "",
+            "type": "text",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "input",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Email:",
+            "htmlFor": "email",
+          },
+          "ref": null,
+          "rendered": "Email:",
+          "type": "label",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "id": "email",
+            "name": "",
+            "type": "email",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "input",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Password:",
+            "htmlFor": "password",
+          },
+          "ref": null,
+          "rendered": "Password:",
+          "type": "label",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "id": "password",
+            "name": "",
+            "type": "password",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "input",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Sign Up",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": "Sign Up",
+          "type": "button",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+    "attachTo": undefined,
+    "hydrateIn": undefined,
+  },
+}
+`;

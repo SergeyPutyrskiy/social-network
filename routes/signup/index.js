@@ -1,36 +1,42 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const models = require('../../models/index');
+const express = require("express");
 
-router.post('/', (req, res) => {
+const router = express.Router();
+const bcrypt = require("bcrypt");
+const models = require("../../models/index");
+
+router.post("/", (req, res) => {
   const {
-    firstName, lastName,
-    email, password, userName,
+    firstName: firstNameReq,
+    lastName: lastNameReq,
+    email: emailReq,
+    password: passwordReq,
+    userName: userNameReq
   } = req.body;
   const saltRounds = 10;
 
-  bcrypt.hash(password, saltRounds).then(hash => {
+  bcrypt.hash(passwordReq, saltRounds).then(hash => {
     models.User.create({
-      userName,
-      firstName,
-      lastName,
-      email,
-      password: hash,
+      userName: userNameReq,
+      firstName: firstNameReq,
+      lastName: lastNameReq,
+      email: emailReq,
+      password: hash
     })
-    .then(user => {
-      const { userName, firstName, lastName, email } = user;
+      .then(user => {
+        const { userName, firstName, lastName, email } = user;
 
-      res.json({
-        userName,
-        firstName,
-        lastName,
-        email,
-      });
-    })
-    .catch(err => res.status(422).json({
-      error: err,
-    }));
+        res.json({
+          userName,
+          firstName,
+          lastName,
+          email
+        });
+      })
+      .catch(err =>
+        res.status(422).json({
+          error: err
+        })
+      );
   });
 });
 
