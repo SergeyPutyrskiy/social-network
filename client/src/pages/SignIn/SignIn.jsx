@@ -17,7 +17,7 @@ type State = {
 
 class SignIn extends React.PureComponent<Props, State> {
   state = {
-    email: "john.hulk@mail.com",
+    email: "serg@mail.com",
     password: "1234"
   };
 

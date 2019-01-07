@@ -4,17 +4,17 @@ const initialState = {
   inProgress: false
 };
 
-const user = (state = initialState, action) => {
+const signin = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_USER_START:
+    case types.SIGN_IN_START:
       return { ...state, inProgress: true };
-    case types.GET_USER_COMPLETED:
+    case types.SIGN_IN_COMPLETED:
       return { ...state, data: action.data, inProgress: false };
-    case types.GET_USER_FAILED:
+    case types.SIGN_IN_FAILED:
       return { ...state, inProgress: false, error: action.error };
     default:
       return state;
   }
 };
 
-export default user;
+export default signin;

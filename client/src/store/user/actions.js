@@ -1,11 +1,11 @@
 import * as types from "./types";
 
-export const signInCompleted = data => ({
-  type: types.SIGN_IN_COMPLETED,
+export const getUserCompleted = data => ({
+  type: types.GET_USER_COMPLETED,
   data
 });
 
-export const signInFailed = error => ({
-  type: types.SIGN_IN_FAILED,
+export const getUserFailed = error => ({
+  type: types.GET_USER_FAILED,
   error
 });

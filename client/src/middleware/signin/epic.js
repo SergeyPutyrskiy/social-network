@@ -2,9 +2,9 @@ import { ofType, combineEpics } from "redux-observable";
 import { mergeMap, catchError, tap } from "rxjs/operators";
 import { of, from, empty } from "rxjs";
 import history from "../../services/history";
-import { signInCompleted, signInFailed } from "../../store/user/actions";
+import { signInCompleted, signInFailed } from "../../store/signin/actions";
 import * as types from "./types";
-import { USER_AUTH_TOKEN_KEY } from "../../constants/common";
+import { USER_AUTH_TOKEN_KEYS, BEARER } from "../../constants/common";
 
 const signInEpic = ($action, state, { user }) =>
   $action.pipe(
@@ -14,9 +14,9 @@ const signInEpic = ($action, state, { user }) =>
         mergeMap(({ data, data: { accessToken, refreshToken } }) => {
           try {
             localStorage.setItem(
-              USER_AUTH_TOKEN_KEY,
+              USER_AUTH_TOKEN_KEYS,
               JSON.stringify({
-                accessToken,
+                accessToken: `${BEARER} ${accessToken}`,
                 refreshToken
               })
             );
