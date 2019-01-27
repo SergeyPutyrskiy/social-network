@@ -9,6 +9,9 @@ class User {
     axios
       .get("/profile", { headers: { Authorization: accessToken } })
       .then(res => res.data);
+
+  reAuthenticate = tokens =>
+    axios.post("/token", { tokens }).then(res => res.data);
 }
 
 const user = new User();

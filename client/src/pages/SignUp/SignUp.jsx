@@ -18,13 +18,13 @@ type State = {
   password: string
 };
 
-class SignUp extends React.PureComponent<Props, State> {
+class SignUp extends React.Component<Props, State> {
   state = {
-    userName: "serg",
-    firstName: "Sergey",
-    lastName: "Putyrskiy",
-    email: "serg@mail.com",
-    password: "1234"
+    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
   };
 
   handleInputChange = (e: Object) => {

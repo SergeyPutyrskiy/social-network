@@ -1,7 +1,13 @@
-import { combineEpics } from "redux-observable";
+import { combineEpics, createEpicMiddleware } from "redux-observable";
 import signinEpic from "./signin/epic";
 import signupEpic from "./signup/epic";
-import logOut from "./logOut/epic";
-import user from "./user/epic";
+import profile from "./profile/epic";
 
-export default combineEpics(signinEpic, signupEpic, logOut, user);
+import user from "../api/user";
+
+export const epicMiddleware = createEpicMiddleware({
+  dependencies: {
+    user
+  }
+});
+export const rootEpic = combineEpics(signinEpic, signupEpic, profile);

@@ -1,0 +1,3 @@
+export const GET_PROFILE_START = "profile/GET_PROFILE_START";
+export const GET_PROFILE_COMPLETED = "profile/GET_PROFILE_COMPLETED";
+export const GET_PROFILE_FAILED = "profile/GET_PROFILE_FAILED";

@@ -1,26 +1,29 @@
 // @flow
-import React, { Fragment, PureComponent } from "react";
+import React, { Fragment, Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 
-import { getUserStart } from "../../middleware/user/actions";
-import { logOutStart } from "../../middleware/logOut/actions";
+import { getProfileStart } from "../../middleware/profile/actions";
+import { logOut } from "../../store/signin/actions";
 
 type Props = {
-  logOutStart: Function,
-  getUserStart: Function
+  logOut: Function,
+  getProfileStart: Function,
+  history: Object
 };
 
-class Profile extends PureComponent<Props, {}> {
+class Profile extends Component<Props, {}> {
   componentDidMount() {
-    const { getUserStart } = this.props;
-    getUserStart();
+    const { getProfileStart } = this.props;
+    getProfileStart();
   }
 
   handleLogOut = () => {
-    const { logOutStart } = this.props;
-    logOutStart();
+    const { logOut, history } = this.props;
+
+    history.push("/signin");
+    logOut();
   };
 
   render() {
@@ -35,7 +38,7 @@ class Profile extends PureComponent<Props, {}> {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ logOutStart, getUserStart }, dispatch);
+  bindActionCreators({ logOut, getProfileStart }, dispatch);
 
 export default connect(
   null,

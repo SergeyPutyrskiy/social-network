@@ -34,8 +34,7 @@ router.get("/", checkToken, (req, res) => {
     } else {
       res.json({
         data: {
-          user: authData.user,
-          routeName: "profile"
+          user: authData.user
         }
       });
     }

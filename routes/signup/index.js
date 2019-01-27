@@ -23,9 +23,10 @@ router.post("/", (req, res) => {
       password: hash
     })
       .then(user => {
-        const { userName, firstName, lastName, email } = user;
+        const { id, userName, firstName, lastName, email } = user;
 
         res.json({
+          id,
           userName,
           firstName,
           lastName,
