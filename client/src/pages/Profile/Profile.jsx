@@ -6,11 +6,13 @@ import Button from "@material-ui/core/Button";
 
 import { getProfileStart } from "../../middleware/profile/actions";
 import { logOut } from "../../store/signin/actions";
+import UserInfo from "./UserInfo";
 
 type Props = {
   logOut: Function,
   getProfileStart: Function,
-  history: Object
+  history: Object,
+  profile: Object
 };
 
 class Profile extends Component<Props, {}> {
@@ -27,20 +29,27 @@ class Profile extends Component<Props, {}> {
   };
 
   render() {
+    const { profile } = this.props;
+
     return (
       <Fragment>
         <Button variant="contained" color="primary" onClick={this.handleLogOut}>
           Log out
         </Button>
+        <UserInfo profile={profile} />
       </Fragment>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ logOut, getProfileStart }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Profile);
