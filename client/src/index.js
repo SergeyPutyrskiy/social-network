@@ -37,3 +37,5 @@ ReactDOM.render(
   document.getElementById("root")
 );
 registerServiceWorker();
+
+// Todo fix navigation issue after login
