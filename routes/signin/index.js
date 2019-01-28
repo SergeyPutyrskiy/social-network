@@ -42,7 +42,6 @@ router.post("/", (req, res) => {
                 (err, accessToken) => {
                   res.json({
                     data: {
-                      routeName: "signin",
                       user: userInfo,
                       accessToken,
                       refreshToken

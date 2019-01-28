@@ -6,11 +6,11 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case types.LOG_OUT_START:
+    case types.GET_PROFILE_START:
       return { ...state, inProgress: true };
-    case types.LOG_OUT_COMPLETED:
-      return { ...state, inProgress: false };
-    case types.LOG_OUT_FAILED:
+    case types.GET_PROFILE_COMPLETED:
+      return { ...state, data: action.data.user, inProgress: false };
+    case types.GET_PROFILE_FAILED:
       return { ...state, inProgress: false, error: action.error };
     default:
       return state;

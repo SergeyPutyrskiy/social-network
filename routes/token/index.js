@@ -5,9 +5,12 @@ const jwt = require("jsonwebtoken");
 const models = require("../../models/index");
 
 router.post("/", (req, res) => {
-  const { id, refreshToken } = req.body.user;
+  const { refreshToken, accessToken } = req.body.tokens;
+  const {
+    user: { id }
+  } = jwt.decode(accessToken.split(" ")[1]);
 
-  models.Token.findAll({ where: { user_id: id } })
+  models.Token.findAll({ where: { userId: id } })
     .then(tokenEntries => {
       const isRefreshTokenValid = tokenEntries.some(
         entry => entry.token === refreshToken
@@ -32,11 +35,13 @@ router.post("/", (req, res) => {
             jwt.sign(
               { user: userInfo },
               "devSecretKey",
-              { expiresIn: "20s" },
+              { expiresIn: "300s" },
               (err, accessToken) => {
                 res.json({
-                  accessToken,
-                  refreshToken
+                  data: {
+                    accessToken,
+                    refreshToken
+                  }
                 });
               }
             );
