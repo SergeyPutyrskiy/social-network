@@ -1,8 +1,6 @@
 // @flow
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import React, { Fragment } from "react";
+import { Button, Input } from "semantic-ui-react";
 
 import "./SignUp.css";
 
@@ -23,74 +21,51 @@ const SignUpForm = ({
   handleInputChange,
   handleSubmit
 }: Props) => (
-  <form className="root" noValidate autoComplete="off">
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justify="center"
-      className="full-page-wrapper"
-    >
-      <TextField
-        id="userName"
-        label="UserName"
-        type="text"
-        name="userName"
-        autoComplete="userName"
-        margin="normal"
-        variant="outlined"
-        value={userName}
-        onChange={handleInputChange}
-      />
-      <TextField
-        id="firstName"
-        label="FirstName"
-        type="text"
-        name="firstName"
-        autoComplete="firstName"
-        margin="normal"
-        variant="outlined"
-        value={firstName}
-        onChange={handleInputChange}
-      />
-      <TextField
-        id="lastName"
-        label="LastName"
-        type="text"
-        name="lastName"
-        autoComplete="lastName"
-        margin="normal"
-        variant="outlined"
-        value={lastName}
-        onChange={handleInputChange}
-      />
-      <TextField
-        id="email"
-        label="Email"
-        type="email"
-        name="email"
-        autoComplete="email"
-        margin="normal"
-        variant="outlined"
-        value={email}
-        onChange={handleInputChange}
-      />
-      <TextField
-        type="password"
-        name="password"
-        id="password"
-        value={password}
-        onChange={handleInputChange}
-        label="Password"
-        autoComplete="current-password"
-        margin="normal"
-        variant="outlined"
-      />
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Sign Up
-      </Button>
-    </Grid>
-  </form>
+  <Fragment>
+    <Input
+      id="userName"
+      label="UserName"
+      type="text"
+      name="userName"
+      value={userName}
+      onChange={handleInputChange}
+    />
+    <Input
+      id="firstName"
+      label="FirstName"
+      type="text"
+      name="firstName"
+      value={firstName}
+      onChange={handleInputChange}
+    />
+    <Input
+      id="lastName"
+      label="LastName"
+      type="text"
+      name="lastName"
+      value={lastName}
+      onChange={handleInputChange}
+    />
+    <Input
+      id="email"
+      label="Email"
+      type="email"
+      name="email"
+      value={email}
+      onChange={handleInputChange}
+    />
+    <Input
+      type="password"
+      name="password"
+      id="password"
+      value={password}
+      onChange={handleInputChange}
+      label="Password"
+    />
+    <Button variant="contained" color="primary" onClick={handleSubmit}>
+      Sign Up
+    </Button>
+  </Fragment>
 );
 
 export default SignUpForm;

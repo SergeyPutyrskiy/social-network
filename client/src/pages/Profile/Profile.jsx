@@ -2,7 +2,8 @@
 import React, { Fragment, Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Button from "@material-ui/core/Button";
+import { NavLink } from "react-router-dom";
+import { Menu, Button } from "semantic-ui-react";
 
 import { getProfileStart } from "../../middleware/profile/actions";
 import { logOut } from "../../store/signin/actions";
@@ -37,6 +38,11 @@ class Profile extends Component<Props, {}> {
           Log out
         </Button>
         <UserInfo profile={profile} />
+        <Menu vertical>
+          <Menu.Item link>
+            <NavLink to="/messages">Messages</NavLink>
+          </Menu.Item>
+        </Menu>
       </Fragment>
     );
   }

@@ -12,6 +12,7 @@ import rootReducer from "./store";
 import { rootEpic, epicMiddleware } from "./middleware";
 import registerServiceWorker from "./registerServiceWorker";
 
+import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 
 const persistConfig = {

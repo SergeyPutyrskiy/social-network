@@ -1,4 +1,6 @@
 const app = require("express")();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const models = require("./models");
@@ -6,6 +8,7 @@ const signup = require("./routes/signup");
 const signin = require("./routes/signin");
 const profile = require("./routes/profile");
 const token = require("./routes/token");
+const messages = require("./routes/messages");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,11 +19,14 @@ app.use("/signin", signin);
 app.use("/profile", profile);
 app.use("/token", token);
 
+io.on("connection", messages);
+
 // {force: true}
 models.sequelize
   .sync()
   .then(() => {
-    app.listen(3000, () => console.log("App listen 3000 port"));
+    // app.listen(3000, () => console.log("App listen 3000 port"));
+    server.listen(3000, () => console.log("App listen 3000 port"));
   })
   .catch(err => console.log("Sequelize sync error ", err));
 
