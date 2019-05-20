@@ -6,26 +6,40 @@ import { socket, subscribeToSocket } from "../../api/socket";
 
 type Props = {};
 
-class Messages extends Component<Props, {}> {
+type State = {
+  value: string,
+  messages: Array<string>
+};
+
+class Messages extends Component<Props, State> {
   state = {
     messages: [],
     value: ""
   };
 
   componentDidMount() {
+    subscribeToSocket(({ data }) => this.saveMessage(data));
+  }
+
+  saveMessage = (data: string) => {
     const { messages } = this.state;
 
-    subscribeToSocket(data => {
-      this.setState({
-        messages: [...messages, data.data]
-      });
+    this.setState({
+      messages: [...messages, data]
     });
-  }
+  };
 
   handleSendMessage = () => {
     const { value } = this.state;
+
     socket.emit("chat", value);
+    this.clearValue();
   };
+
+  clearValue = () =>
+    this.setState({
+      value: ""
+    });
 
   render() {
     const { messages, value } = this.state;
