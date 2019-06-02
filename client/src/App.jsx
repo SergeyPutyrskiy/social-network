@@ -7,6 +7,7 @@ import history from "./services/history";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import Profile from "./pages/Profile/Profile";
+import Messages from "./pages/Messages/Messages";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 import "./App.css";
@@ -23,6 +24,11 @@ const App = ({ isAuthenticated }: Props) => (
         <PrivateRoute
           path="/profile"
           component={Profile}
+          isAuthenticated={isAuthenticated}
+        />
+        <PrivateRoute
+          path="/messages"
+          component={Messages}
           isAuthenticated={isAuthenticated}
         />
         <Route path="/signin" component={SignIn} />

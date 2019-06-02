@@ -1,10 +1,7 @@
 // @flow
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
+import { Button, Input } from "semantic-ui-react";
 
 import "./SignIn.css";
 
@@ -22,44 +19,29 @@ const SignInForm = ({
   handleSubmit,
   handleInputChange
 }: Props) => (
-  <form className="root" noValidate autoComplete="off">
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justify="center"
-      className="full-page-wrapper"
-    >
-      <TextField
-        id="email"
-        label="Email"
-        type="email"
-        name="email"
-        autoComplete="email"
-        margin="normal"
-        variant="outlined"
-        value={email}
-        onChange={handleInputChange}
-      />
-      <TextField
-        type="password"
-        name="password"
-        id="password"
-        value={password}
-        onChange={handleInputChange}
-        label="Password"
-        autoComplete="current-password"
-        margin="normal"
-        variant="outlined"
-      />
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Sign In
-      </Button>
-      Or
-      <Divider variant="middle" />
-      <Link to="/signup">Sign Up</Link>
-    </Grid>
-  </form>
+  <Fragment>
+    <Input
+      id="email"
+      label="Email"
+      type="email"
+      name="email"
+      value={email}
+      onChange={handleInputChange}
+    />
+    <Input
+      type="password"
+      name="password"
+      id="password"
+      value={password}
+      onChange={handleInputChange}
+      label="Password"
+    />
+    <Button variant="contained" color="primary" onClick={handleSubmit}>
+      Sign In
+    </Button>
+    Or
+    <Link to="/signup">Sign Up</Link>
+  </Fragment>
 );
 
 export default SignInForm;

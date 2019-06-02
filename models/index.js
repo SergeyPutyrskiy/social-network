@@ -7,7 +7,8 @@ const sequelize = new Sequelize("socialnetwork", "postgres", "123456", {
 });
 const models = {
   User: sequelize.import("./user"),
-  Token: sequelize.import("./token")
+  Token: sequelize.import("./token"),
+  Message: sequelize.import("./message")
 };
 
 Object.keys(models).forEach(modelName => {
