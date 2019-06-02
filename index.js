@@ -25,7 +25,6 @@ io.on("connection", messages);
 models.sequelize
   .sync()
   .then(() => {
-    // app.listen(3000, () => console.log("App listen 3000 port"));
     server.listen(3000, () => console.log("App listen 3000 port"));
   })
   .catch(err => console.log("Sequelize sync error ", err));
