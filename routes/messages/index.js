@@ -1,9 +1,11 @@
-const messages = socket => {
-  // socket.emit("chat", { hello: "world" });
+const models = require("../../models/index");
 
+const messages = socket => {
   socket.on("chat", data => {
-    console.log("Socket data", data);
+    console.log("chat data ====== ", data);
+
     socket.broadcast.emit("chat", { data });
+    models.Message.create({ message: data.message, userId: data.id });
   });
 };
 

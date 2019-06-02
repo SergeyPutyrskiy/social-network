@@ -1,14 +1,30 @@
 // @flow
 import React, { Fragment, Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, Button } from "semantic-ui-react";
+import { Menu, Button, Label } from "semantic-ui-react";
+import { compose } from "recompose";
+
+import withUserProfile from "../../hocs/withUserProfile";
+import withLoader from "../../hocs/withLoader";
 import { socket, subscribeToSocket } from "../../api/socket";
 
-type Props = {};
+type Profile = {
+  data: {
+    id: number,
+    userName: string
+  }
+};
+
+type Message = {
+  message: string,
+  userName: string
+};
+
+type Props = { profile: Profile };
 
 type State = {
   value: string,
-  messages: Array<string>
+  messages: Array<Message> | []
 };
 
 class Messages extends Component<Props, State> {
@@ -31,8 +47,18 @@ class Messages extends Component<Props, State> {
 
   handleSendMessage = () => {
     const { value } = this.state;
+    const {
+      profile: {
+        data: { id, userName }
+      }
+    } = this.props;
 
-    socket.emit("chat", value);
+    socket.emit(process.env.REACT_APP_CHAT_CHANNEL, {
+      id,
+      userName,
+      message: value
+    });
+
     this.clearValue();
   };
 
@@ -53,8 +79,13 @@ class Messages extends Component<Props, State> {
           </Menu.Item>
         </Menu>
         <p>
-          {messages.map(message => (
-            <p>{message}</p>
+          {messages.map(({ userName, message }) => (
+            <div>
+              <Label as="a" basic>
+                {userName}
+              </Label>
+              {` ${message}`}
+            </div>
           ))}
         </p>
         <input
@@ -68,4 +99,7 @@ class Messages extends Component<Props, State> {
   }
 }
 
-export default Messages;
+export default compose(
+  withUserProfile,
+  withLoader(props => props.profile.inProgress)
+)(Messages);
