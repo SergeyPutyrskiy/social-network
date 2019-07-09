@@ -1,12 +1,15 @@
 // @flow
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, Button, Label } from "semantic-ui-react";
+import { Menu, Button, Label, Grid } from "semantic-ui-react";
 import { compose } from "recompose";
 
 import withUserProfile from "../../hocs/withUserProfile";
 import withLoader from "../../hocs/withLoader";
 import { socket, subscribeToSocket } from "../../api/socket";
+
+import withAxios from "../../hocs/withAxios";
+import FriendsList from "../../components/Friends/Friends";
 
 type Profile = {
   data: {
@@ -16,15 +19,16 @@ type Profile = {
 };
 
 type Message = {
+  id: number,
   message: string,
   userName: string
 };
 
-type Props = { profile: Profile };
+type Props = { profile: Profile, friendsRequest: any };
 
 type State = {
   value: string,
-  messages: Array<Message> | []
+  messages: ?Array<Message>
 };
 
 class Messages extends Component<Props, State> {
@@ -37,7 +41,7 @@ class Messages extends Component<Props, State> {
     subscribeToSocket(({ data }) => this.saveMessage(data));
   }
 
-  saveMessage = (data: string) => {
+  saveMessage = (data: Array<Message>) => {
     const { messages } = this.state;
 
     this.setState({
@@ -69,37 +73,50 @@ class Messages extends Component<Props, State> {
 
   render() {
     const { messages, value } = this.state;
+    const { friendsRequest } = this.props;
 
     return (
-      <Fragment>
-        Messages Page
-        <Menu vertical>
-          <Menu.Item link>
-            <NavLink to="/profile">Profile</NavLink>
-          </Menu.Item>
-        </Menu>
-        <p>
-          {messages.map(({ userName, message }) => (
-            <div>
-              <Label as="a" basic>
-                {userName}
-              </Label>
-              {` ${message}`}
-            </div>
-          ))}
-        </p>
-        <input
-          type="text"
-          value={value}
-          onChange={({ target: { value } }) => this.setState({ value })}
-        />
-        <Button onClick={this.handleSendMessage}>Send message</Button>
-      </Fragment>
+      <Grid>
+        <Grid.Column width={5}>
+          <Menu vertical size="lage">
+            <Menu.Item link>
+              <NavLink to="/profile">Profile</NavLink>
+            </Menu.Item>
+          </Menu>
+
+          <FriendsList
+            friends={friendsRequest.data && friendsRequest.data.friends}
+          />
+        </Grid.Column>
+        <Grid.Column width={11}>
+          <p>
+            {messages.map(({ userName, message }) => (
+              <div>
+                <Label as="a" basic>
+                  {userName}
+                </Label>
+                {` ${message}`}
+              </div>
+            ))}
+          </p>
+          <input
+            type="text"
+            value={value}
+            onChange={({ target: { value } }) => this.setState({ value })}
+          />
+          <Button onClick={this.handleSendMessage}>Send message</Button>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
 
 export default compose(
   withUserProfile,
+  withAxios(props => ({
+    friendsRequest: props.profile.data
+      ? { url: "/friends", params: { userId: props.profile.data.id } }
+      : {}
+  })),
   withLoader(props => props.profile.inProgress)
 )(Messages);
