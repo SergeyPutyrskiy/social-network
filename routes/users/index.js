@@ -11,12 +11,12 @@ router.get("/", (req, res) => {
     where: Sequelize.where(
       Sequelize.fn(
         "concat",
-        Sequelize.col("firstName"),
+        Sequelize.fn("LOWER", Sequelize.col("firstName")),
         " ",
-        Sequelize.col("lastName")
+        Sequelize.fn("LOWER", Sequelize.col("lastName"))
       ),
       {
-        [Op.like]: `%${req.query.q}%`
+        [Op.like]: `%${req.query.q.toLowerCase()}%`
       }
     )
   })

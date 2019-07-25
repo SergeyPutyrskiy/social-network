@@ -10,6 +10,7 @@ const profile = require("./routes/profile");
 const token = require("./routes/token");
 const messages = require("./routes/messages");
 const friends = require("./routes/friends");
+const users = require("./routes/users");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,6 +21,7 @@ app.use("/signin", signin);
 app.use("/profile", profile);
 app.use("/token", token);
 app.use("/friends", friends);
+app.use("/users", users);
 
 io.on("connection", messages);
 
