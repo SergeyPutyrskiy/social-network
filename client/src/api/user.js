@@ -5,9 +5,9 @@ class User {
 
   signUp = userData => axios.post("/signup", userData).then(res => res.data);
 
-  getUser = accessToken =>
+  getUser = (accessToken, userId) =>
     axios
-      .get("/profile", { headers: { Authorization: accessToken } })
+      .get(`/users/${userId}`, { headers: { Authorization: accessToken } })
       .then(res => res.data);
 
   reAuthenticate = tokens =>

@@ -6,11 +6,10 @@ const cors = require("cors");
 const models = require("./models");
 const signup = require("./routes/signup");
 const signin = require("./routes/signin");
-const profile = require("./routes/profile");
+const users = require("./routes/users");
 const token = require("./routes/token");
 const messages = require("./routes/messages");
 const friends = require("./routes/friends");
-const users = require("./routes/users");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,10 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/signup", signup);
 app.use("/signin", signin);
-app.use("/profile", profile);
+app.use("/users", users);
 app.use("/token", token);
 app.use("/friends", friends);
-app.use("/users", users);
 
 io.on("connection", messages);
 
