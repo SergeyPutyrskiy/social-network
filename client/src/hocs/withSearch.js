@@ -22,7 +22,9 @@ const withSearch = (mapper, url) => WrappedComponent => props => {
   }
 
   function handleResultSelect(e, { result }) {
-    setValue(result.title);
+    props.history.push(`/profile/${result.id}`);
+
+    setValue(result);
   }
 
   return (

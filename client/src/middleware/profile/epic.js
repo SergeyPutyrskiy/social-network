@@ -21,9 +21,9 @@ const getProfileEpic = ($action, state, { user }) =>
     ofType(types.GET_PROFILE_START),
     switchMap(() =>
       defer(() => {
-        const { accessToken } = state.value.user.data;
+        const { accessToken, user: profile } = state.value.user.data;
 
-        return from(user.getUser(accessToken));
+        return from(user.getUser(accessToken, profile.id));
       }).pipe(
         mergeMap(({ data }) => of(getProfileCompleted(data))),
         catchError(({ response }, source) => {

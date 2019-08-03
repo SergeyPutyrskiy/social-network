@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
-import { Image, List, Button } from "semantic-ui-react";
+import { Image, List } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 import defaultAvatar1 from "../../images/default_avatar_1.png";
 
@@ -11,18 +12,15 @@ type Friends = {
 };
 
 type Props = {
-  friends: Friends[]
+  friends: Friends[],
+  history: Object
 };
 
-const FriendsList = ({ friends, ...rest }: Props) =>
+const FriendsList = ({ friends, history }: Props) =>
   friends && (
-    <List selection size="medium" verticalAlign="middle" {...rest}>
+    <List selection size="medium" verticalAlign="middle">
       {friends.map(friend => (
-        <List.Item>
-          <List.Content floated="right">
-            <Button>Add</Button>
-          </List.Content>
-
+        <List.Item onClick={() => history.push(`/profile/${friend.id}`)}>
           <List.Content floated="left">
             <Image avatar src={friend.image || defaultAvatar1} />
             {`${friend.firstName} ${friend.lastName}`}
@@ -32,4 +30,4 @@ const FriendsList = ({ friends, ...rest }: Props) =>
     </List>
   );
 
-export default FriendsList;
+export default withRouter(FriendsList);

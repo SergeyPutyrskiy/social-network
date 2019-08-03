@@ -5,24 +5,30 @@ const models = require("../../models/index");
 const router = express.Router();
 
 router.post("/", (req, res) => {
-  models.Friends.create({
-    userId1: req.body.userId1,
-    userId2: req.body.userId2
-  })
-    .then(friendEntity => {
-      const { id, userId1, userId2 } = friendEntity;
-
-      res.json({
-        id,
-        userId1,
-        userId2
-      });
+  if (req.body.userId1 === req.body.userId2) {
+    res.status(422).json({
+      error: "User id's should be different"
+    });
+  } else {
+    models.Friends.create({
+      userId1: req.body.userId1,
+      userId2: req.body.userId2
     })
-    .catch(err =>
-      res.status(422).json({
-        error: err
+      .then(friendEntity => {
+        const { id, userId1, userId2 } = friendEntity;
+
+        res.json({
+          id,
+          userId1,
+          userId2
+        });
       })
-    );
+      .catch(err =>
+        res.status(422).json({
+          error: err
+        })
+      );
+  }
 });
 
 router.get("/", (req, res) => {
