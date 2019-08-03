@@ -12,10 +12,10 @@ const getAvatarAlias = (firstName, lastName) =>
 const UserInfo = ({ profile }: Props) => (
   <Fragment container justify="center" alignItems="center">
     {getAvatarAlias(
-      get(profile, "data.firstName", ""),
-      get(profile, "data.lastName", "")
+      get(profile, "firstName", ""),
+      get(profile, "lastName", "")
     )}
-    {get(profile, "data.userName", "")}
+    {get(profile, "userName", "")}
   </Fragment>
 );
 

@@ -6,6 +6,7 @@ import history from "./services/history";
 
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
+import MyProfile from "./pages/Profile/MyProfile";
 import Profile from "./pages/Profile/Profile";
 import Messages from "./pages/Messages/Messages";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -22,7 +23,13 @@ const App = ({ isAuthenticated }: Props) => (
       <Switch>
         <Redirect exact path="/" to="/profile" />
         <PrivateRoute
+          exact
           path="/profile"
+          component={MyProfile}
+          isAuthenticated={isAuthenticated}
+        />
+        <PrivateRoute
+          path="/profile/:id"
           component={Profile}
           isAuthenticated={isAuthenticated}
         />
