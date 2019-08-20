@@ -4,13 +4,12 @@ import { NavLink } from "react-router-dom";
 import { Menu, Button, Label, Grid, Search } from "semantic-ui-react";
 import { compose } from "recompose";
 import debounce from "lodash/debounce";
+import { connect } from "react-redux";
 
-import withUserProfile from "../../hocs/withUserProfile";
-import withLoader from "../../hocs/withLoader";
 import withSearch from "../../hocs/withSearch";
 import { socket, subscribeToSocket } from "../../api/socket";
 
-import withAxios from "../../hocs/withAxios";
+import friendsApi from "../../api/friends";
 import FriendsList from "../../components/Friends/Friends";
 
 type Profile = {
@@ -33,22 +32,32 @@ type Props = {
   handleResultSelect: Function,
   handleSearchChange: Function,
   searchResults: Function,
-  searchValue: Object
+  searchValue: Object,
+  userId: number
 };
 
 type State = {
   value: string,
-  messages: ?Array<Message>
+  messages: ?Array<Message>,
+  friends: Object[]
 };
 
 class Messages extends Component<Props, State> {
   state = {
     messages: [],
-    value: ""
+    value: "",
+    friends: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { userId } = this.props;
+    const res = await friendsApi.getFriends(userId);
+
     subscribeToSocket(({ data }) => this.saveMessage(data));
+
+    this.setState({
+      friends: res.data.friends
+    });
   }
 
   saveMessage = (data: Array<Message>) => {
@@ -82,14 +91,14 @@ class Messages extends Component<Props, State> {
     });
 
   render() {
-    const { messages, value } = this.state;
+    const { messages, value, friends } = this.state;
     const {
-      friendsRequest,
       searchLoading,
       handleResultSelect,
       handleSearchChange,
       searchResults,
-      searchValue
+      searchValue,
+      userId
     } = this.props;
 
     return (
@@ -97,7 +106,7 @@ class Messages extends Component<Props, State> {
         <Grid.Column width={5}>
           <Menu vertical size="lage">
             <Menu.Item link>
-              <NavLink to="/profile">Profile</NavLink>
+              <NavLink to={`/profile/${userId}`}>Profile</NavLink>
             </Menu.Item>
           </Menu>
 
@@ -112,9 +121,7 @@ class Messages extends Component<Props, State> {
             {...this.props}
           />
 
-          <FriendsList
-            friends={friendsRequest.data && friendsRequest.data.friends}
-          />
+          <FriendsList friends={friends.length && friends} />
         </Grid.Column>
         <Grid.Column width={11}>
           <p>
@@ -139,14 +146,12 @@ class Messages extends Component<Props, State> {
   }
 }
 
+const mapStateToProps = state => ({
+  userId: state.user.data.user.id
+});
+
 export default compose(
-  withUserProfile,
-  withAxios(props => ({
-    friendsRequest: props.profile.data
-      ? { url: "/friends", params: { userId: props.profile.data.id } }
-      : {}
-  })),
-  withLoader(props => props.profile.inProgress),
+  connect(mapStateToProps),
   withSearch(
     data =>
       data.map(item => ({

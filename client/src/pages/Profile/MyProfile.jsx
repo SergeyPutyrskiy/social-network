@@ -2,10 +2,10 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 import UserInfo from "./UserInfo";
 import LogOut from "../../components/LogOut";
-import withUserProfile from "../../hocs/withUserProfile";
 
 type Props = {
   profile: Object
@@ -23,4 +23,8 @@ const MyProfile = ({ profile }: Props) => (
   </Fragment>
 );
 
-export default withUserProfile(MyProfile);
+const mapStateToProps = state => ({
+  userId: state.user.data.user.id
+});
+
+export default connect(mapStateToProps)(MyProfile);
