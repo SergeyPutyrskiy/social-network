@@ -20,8 +20,8 @@ type State = {
 
 class SignIn extends React.Component<Props, State> {
   state = {
-    email: "serg@mail.com",
-    password: "1234"
+    email: "",
+    password: ""
   };
 
   handleSubmit = async () => {
@@ -32,9 +32,8 @@ class SignIn extends React.Component<Props, State> {
       accessToken: `${BEARER} ${response.data.accessToken}`
     };
 
-    history.push(`/profile/${response.data.user.id}`);
-
     signInCompleted(dataWithBearer);
+    history.push(`/profile/${response.data.user.id}`);
   };
 
   handleInputChange = e => {

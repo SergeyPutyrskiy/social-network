@@ -121,7 +121,7 @@ class Messages extends Component<Props, State> {
             {...this.props}
           />
 
-          <FriendsList friends={friends.length && friends} />
+          <FriendsList friends={!!friends.length && friends} />
         </Grid.Column>
         <Grid.Column width={11}>
           <p>
