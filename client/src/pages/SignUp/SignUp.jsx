@@ -1,13 +1,11 @@
 // @flow
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 
 import SignUpForm from "./SignUpForm";
-import { signUpStart } from "../../middleware/signup/actions";
+import userApi from "../../api/user";
 
 type Props = {
-  signUpStart: Function
+  history: Object
 };
 
 type State = {
@@ -35,9 +33,11 @@ class SignUp extends React.Component<Props, State> {
     });
   };
 
-  handleSubmit = () => {
-    const { signUpStart } = this.props;
-    signUpStart(this.state);
+  handleSubmit = async () => {
+    const { history } = this.props;
+
+    await userApi.signUp(this.state);
+    history.push("/signin");
   };
 
   render() {
@@ -53,10 +53,4 @@ class SignUp extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ signUpStart }, dispatch);
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignUp);
+export default SignUp;

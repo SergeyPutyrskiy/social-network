@@ -1,7 +1,8 @@
 // @flow
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Button, Menu } from "semantic-ui-react";
 
 import UserInfo from "./UserInfo";
 import LogOut from "../../components/LogOut";
@@ -40,6 +41,11 @@ const Profile = (props: Props) => {
       {user && (
         <Fragment>
           <UserInfo profile={user} />
+          <Menu vertical>
+            <Menu.Item link>
+              <NavLink to="/messages">Messages</NavLink>
+            </Menu.Item>
+          </Menu>
           <Button
             content="Add"
             icon="add user"
