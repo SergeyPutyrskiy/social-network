@@ -21,23 +21,17 @@ router.post("/", (req, res) => {
       lastName: lastNameReq,
       email: emailReq,
       password: hash
-    })
-      .then(user => {
-        const { id, userName, firstName, lastName, email } = user;
+    }).then(user => {
+      const { id, userName, firstName, lastName, email } = user;
 
-        res.json({
-          id,
-          userName,
-          firstName,
-          lastName,
-          email
-        });
-      })
-      .catch(err =>
-        res.status(422).json({
-          error: err
-        })
-      );
+      res.json({
+        id,
+        userName,
+        firstName,
+        lastName,
+        email
+      });
+    });
   });
 });
 

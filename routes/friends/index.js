@@ -4,34 +4,29 @@ const models = require("../../models/index");
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   if (req.body.userId1 === req.body.userId2) {
-    res.status(422).json({
-      error: "User id's should be different"
-    });
+    const err = new Error("User id's should be different");
+    err.status = 422;
+
+    next(err);
   } else {
     models.Friends.create({
       userId1: req.body.userId1,
       userId2: req.body.userId2
-    })
-      .then(friendEntity => {
-        const { id, userId1, userId2 } = friendEntity;
+    }).then(friendEntity => {
+      const { id, userId1, userId2 } = friendEntity;
 
-        res.json({
-          id,
-          userId1,
-          userId2
-        });
-      })
-      .catch(err =>
-        res.status(422).json({
-          error: err
-        })
-      );
+      res.json({
+        id,
+        userId1,
+        userId2
+      });
+    });
   }
 });
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   models.sequelize
     .query(
       `SELECT u."id", u."firstName", u."lastName", u."userName"
@@ -54,11 +49,7 @@ router.get("/", (req, res) => {
         }
       });
     })
-    .catch(err =>
-      res.status(422).json({
-        error: err
-      })
-    );
+    .catch(err => next(err));
 });
 
 module.exports = router;

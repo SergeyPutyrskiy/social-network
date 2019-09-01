@@ -21,6 +21,10 @@ app.use("/users", users);
 app.use("/token", token);
 app.use("/friends", friends);
 
+app.use((err, req, res) => {
+  res.status(err.status || 500).json({ error: err.message });
+});
+
 io.on("connection", messages);
 
 // {force: true}
@@ -32,4 +36,3 @@ models.sequelize
   .catch(err => console.log("Sequelize sync error ", err));
 
 // Todo add request validator
-// Todo refactore sending erros for response

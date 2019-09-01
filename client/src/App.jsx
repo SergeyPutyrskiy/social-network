@@ -24,7 +24,7 @@ const App = ({ isAuthenticated, user }: Props) => (
         <Redirect
           exact
           path="/"
-          to={user.data && `/profile/${user.data.user.id}`}
+          to={user.data ? `/profile/${user.data.user.id}` : "/signin"}
         />
         <PrivateRoute
           path="/profile/:id"

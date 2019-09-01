@@ -6,7 +6,7 @@ const randtoken = require("rand-token");
 const bcrypt = require("bcrypt");
 const models = require("../../models/index");
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   const {
     password: passwordFromRequest,
     email: emailNameFromRequest
@@ -16,63 +16,53 @@ router.post("/", (req, res) => {
     where: {
       email: emailNameFromRequest
     }
-  })
-    .then(user => {
-      const { id, userName, email, firstName, lastName, password: hash } = user;
-      const userInfo = {
-        id,
-        userName,
-        email,
-        firstName,
-        lastName
-      };
-      const refreshToken = `${randtoken.uid(255)}`;
+  }).then(user => {
+    if (!user) {
+      const err = new Error("User doesn't exist");
+      err.status = 404;
 
-      bcrypt.compare(passwordFromRequest, hash).then(isPasswordValid => {
-        if (isPasswordValid) {
-          models.Token.create({
-            token: refreshToken,
-            userId: id
-          })
-            .then(() => {
-              jwt.sign(
-                { user: userInfo },
-                "devSecretKey",
-                { expiresIn: "300s" },
-                (err, accessToken) => {
-                  res.json({
-                    data: {
-                      user: userInfo,
-                      accessToken,
-                      refreshToken
-                    }
-                  });
+      next(err);
+    }
+
+    const { id, userName, email, firstName, lastName, password: hash } = user;
+    const userInfo = {
+      id,
+      userName,
+      email,
+      firstName,
+      lastName
+    };
+    const refreshToken = `${randtoken.uid(255)}`;
+
+    bcrypt.compare(passwordFromRequest, hash).then(isPasswordValid => {
+      if (isPasswordValid) {
+        models.Token.create({
+          token: refreshToken,
+          userId: id
+        }).then(() => {
+          jwt.sign(
+            { user: userInfo },
+            "devSecretKey",
+            { expiresIn: "300s" },
+            (err, accessToken) => {
+              res.json({
+                data: {
+                  user: userInfo,
+                  accessToken,
+                  refreshToken
                 }
-              );
-            })
-            .catch(err =>
-              res.status(422).json({
-                error: err
-              })
-            );
-        } else {
-          res.status(401).json({
-            error: {
-              name: "WrongCredentialsError",
-              message: "Invalid password"
+              });
             }
-          });
-        }
-      });
-    })
-    .catch(() =>
-      res.status(404).json({
-        error: {
-          name: "WrongUserError",
-          message: `User wasn't found`
-        }
-      })
-    );
+          );
+        });
+      } else {
+        const err = new Error("Invalid password");
+        err.status = 401;
+
+        next(err);
+      }
+    });
+  });
 });
 
 module.exports = router;

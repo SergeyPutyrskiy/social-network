@@ -38,17 +38,11 @@ router.get("/", (req, res) => {
         [Op.like]: `%${req.query.q.toLowerCase()}%`
       }
     )
-  })
-    .then(users => {
-      res.json({
-        data: users
-      });
-    })
-    .catch(err => {
-      res.status(422).json({
-        error: err
-      });
+  }).then(users => {
+    res.json({
+      data: users
     });
+  });
 });
 
 router.get("/:id", checkToken, (req, res) => {
@@ -62,19 +56,13 @@ router.get("/:id", checkToken, (req, res) => {
         }
       });
     } else {
-      models.User.findByPk(req.params.id)
-        .then(user => {
-          res.json({
-            data: {
-              user
-            }
-          });
-        })
-        .catch(err =>
-          res.status(422).json({
-            error: err
-          })
-        );
+      models.User.findByPk(req.params.id).then(user => {
+        res.json({
+          data: {
+            user
+          }
+        });
+      });
     }
   });
 });
