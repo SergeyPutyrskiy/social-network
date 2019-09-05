@@ -12,6 +12,13 @@ router.post("/", (req, res, next) => {
     email: emailNameFromRequest
   } = req.body;
 
+  // const err = new Error("Invalid password");
+  // err.status = 401;
+
+  // console.log("!!!!!!!!!!!!! ", next);
+  // next(err);
+  // next(new Error("Ohh!! Something went wrong"));
+
   models.User.findOne({
     where: {
       email: emailNameFromRequest
@@ -21,7 +28,7 @@ router.post("/", (req, res, next) => {
       const err = new Error("User doesn't exist");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     const { id, userName, email, firstName, lastName, password: hash } = user;

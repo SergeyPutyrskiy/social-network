@@ -21,7 +21,7 @@ app.use("/users", users);
 app.use("/token", token);
 app.use("/friends", friends);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message });
 });
 
