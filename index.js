@@ -22,7 +22,21 @@ app.use("/token", token);
 app.use("/friends", friends);
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({ error: err.message });
+  console.log(err.stack);
+
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  if (err.status) {
+    res.status(err.status).json({ error: err.message });
+  } else {
+    next(err);
+  }
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: "Something went wrong" });
 });
 
 io.on("connection", messages);
