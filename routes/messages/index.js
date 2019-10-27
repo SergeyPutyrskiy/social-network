@@ -1,10 +1,9 @@
-const models = require("../../models/index");
+const getMessages = (req, res, next) => {
+  const { userId } = req.query;
 
-const messages = socket => {
-  socket.on("chat", data => {
-    socket.broadcast.emit("chat", { data });
-    models.Message.create({ message: data.message, userId: data.id });
-  });
+  res.status(200).json({ message: "ok" });
 };
 
-module.exports = messages;
+module.exports = {
+  getMessages: [getMessages]
+};

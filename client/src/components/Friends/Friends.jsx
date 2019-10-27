@@ -16,11 +16,13 @@ type Props = {
   history: Object
 };
 
-const FriendsList = ({ friends, history }: Props) =>
+const FriendsList = ({ friends, history, navigationPath }: Props) =>
   friends && (
     <List selection size="medium" verticalAlign="middle">
       {friends.map(friend => (
-        <List.Item onClick={() => history.push(`/profile/${friend.id}`)}>
+        <List.Item
+          onClick={() => history.push(`/${navigationPath}/${friend.id}`)}
+        >
           <List.Content floated="left">
             <Image avatar src={friend.image || defaultAvatar1} />
             {`${friend.firstName} ${friend.lastName}`}

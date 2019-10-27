@@ -43,6 +43,9 @@ const Profile = (props: Props) => {
           <UserInfo profile={user} />
           <Menu vertical>
             <Menu.Item link>
+              <NavLink to="/friends">Friends</NavLink>
+            </Menu.Item>
+            <Menu.Item link>
               <NavLink to="/messages">Messages</NavLink>
             </Menu.Item>
           </Menu>
