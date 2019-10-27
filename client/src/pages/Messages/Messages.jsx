@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, Button, Label, Grid, Search } from "semantic-ui-react";
+import { Menu, Button, Label, Grid } from "semantic-ui-react";
 import { compose } from "recompose";
-import debounce from "lodash/debounce";
 import { connect } from "react-redux";
 
 import withSearch from "../../hocs/withSearch";
@@ -27,13 +26,9 @@ type Message = {
 
 type Props = {
   profile: Profile,
-  friendsRequest: any,
-  searchLoading: boolean,
-  handleResultSelect: Function,
-  handleSearchChange: Function,
-  searchResults: Function,
-  searchValue: Object,
-  userId: number
+  userId: number,
+  user: Object,
+  match: Object
 };
 
 type State = {
@@ -52,11 +47,14 @@ class Messages extends Component<Props, State> {
   async componentDidMount() {
     const { userId } = this.props;
     const res = await friendsApi.getFriends(userId);
+    const { friends } = res.data;
 
     subscribeToSocket(({ data }) => this.saveMessage(data));
 
+    socket.emit("registerUser", { userId });
+
     this.setState({
-      friends: res.data.friends
+      friends
     });
   }
 
@@ -71,15 +69,15 @@ class Messages extends Component<Props, State> {
   handleSendMessage = () => {
     const { value } = this.state;
     const {
-      profile: {
-        data: { id, userName }
-      }
+      user: { id, userName },
+      match
     } = this.props;
 
     socket.emit(process.env.REACT_APP_CHAT_CHANNEL, {
       id,
       userName,
-      message: value
+      message: value,
+      receiverId: match.params.userId
     });
 
     this.clearValue();
@@ -92,14 +90,7 @@ class Messages extends Component<Props, State> {
 
   render() {
     const { messages, value, friends } = this.state;
-    const {
-      searchLoading,
-      handleResultSelect,
-      handleSearchChange,
-      searchResults,
-      searchValue,
-      userId
-    } = this.props;
+    const { userId } = this.props;
 
     return (
       <Grid>
@@ -110,18 +101,10 @@ class Messages extends Component<Props, State> {
             </Menu.Item>
           </Menu>
 
-          <Search
-            loading={searchLoading}
-            onResultSelect={handleResultSelect}
-            onSearchChange={debounce(handleSearchChange, 500, {
-              leading: true
-            })}
-            results={searchResults}
-            value={searchValue && searchValue.title}
-            {...this.props}
+          <FriendsList
+            friends={!!friends.length && friends}
+            navigationPath="messages"
           />
-
-          <FriendsList friends={!!friends.length && friends} />
         </Grid.Column>
         <Grid.Column width={11}>
           <p>
@@ -147,7 +130,8 @@ class Messages extends Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  userId: state.user.data.user.id
+  userId: state.user.data.user.id,
+  user: state.user.data.user
 });
 
 export default compose(
