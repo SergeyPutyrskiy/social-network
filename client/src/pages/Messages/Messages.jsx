@@ -9,7 +9,8 @@ import {
   List,
   Image,
   Segment,
-  Divider
+  Divider,
+  Input
 } from "semantic-ui-react";
 import { compose } from "recompose";
 import { connect } from "react-redux";
@@ -69,13 +70,49 @@ class Messages extends Component<Props, State> {
 
     subscribeToSocket(({ data }) => this.saveMessage(data));
 
-    socket.emit("registerUser", { userId });
+    socket.emit("subscribeUser", { userId });
 
     this.setState({
       friends,
       messages
     });
   }
+
+  async componentDidUpdate(prevProps) {
+    const { userId, match } = this.props;
+
+    if (prevProps.match.params.userId !== match.params.userId) {
+      const responseMessages = await messagesApi.getMessages(
+        userId,
+        match.params.userId
+      );
+      const { messages } = responseMessages.data;
+
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        messages
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    const { userId } = this.props;
+
+    socket.emit("unsubscribeUser", { userId });
+  }
+
+  get friend() {
+    const { match } = this.props;
+    const { friends } = this.state;
+    const { userId } = match.params;
+
+    return friends.find(({ id }) => id === +userId);
+  }
+
+  clearValue = () =>
+    this.setState({
+      value: ""
+    });
 
   saveMessage = (data: Array<Message>) => {
     const { messages } = this.state;
@@ -92,27 +129,36 @@ class Messages extends Component<Props, State> {
       match
     } = this.props;
 
-    socket.emit(process.env.REACT_APP_CHAT_CHANNEL, {
-      id,
-      userName,
-      message: value,
-      receiverId: match.params.userId
-    });
+    if (value.trim()) {
+      socket.emit(process.env.REACT_APP_CHAT_CHANNEL, {
+        userName,
+        message: value,
+        receiver: {
+          id: +match.params.userId
+        },
+        sender: {
+          id
+        }
+      });
 
-    this.clearValue();
+      this.saveMessage({
+        userName,
+        message: value,
+        receiver: {
+          id: +match.params.userId
+        },
+        sender: {
+          id
+        }
+      });
+
+      this.clearValue();
+    }
   };
-
-  clearValue = () =>
-    this.setState({
-      value: ""
-    });
 
   render() {
     const { messages, value, friends } = this.state;
     const { userId } = this.props;
-    const message = messages.length
-      ? messages.find(message => message.user.id !== userId)
-      : null;
 
     return (
       <Grid>
@@ -131,23 +177,23 @@ class Messages extends Component<Props, State> {
         <Grid.Column width={7}>
           <Segment padded>
             <Header>
-              {message ? (
+              {this.friend ? (
                 <div>
                   <Image
                     verticalAlign="middle"
                     avatar
-                    src={message.user.image || defaultAvatar1}
+                    src={this.friend.image || defaultAvatar1}
                   />
-                  {message.user.firstName}
+                  {this.friend.firstName}
                   &nbsp;
-                  {message.user.lastName}
+                  {this.friend.lastName}
                 </div>
               ) : null}
             </Header>
             <Divider />
 
             <List className="messages-list" relaxed="very">
-              {messages.map(({ user, message, createdAt }, i) => (
+              {messages.map(({ sender, message, createdAt }, i) => (
                 <React.Fragment>
                   {i === 0 && (
                     <Header size="tiny">
@@ -166,10 +212,10 @@ class Messages extends Component<Props, State> {
                   <List.Item>
                     <Segment
                       compact
-                      floated={user.id === userId ? "right" : "left"}
+                      floated={sender.id === userId ? "right" : "left"}
                       size="small"
-                      inverted={user.id === userId}
-                      color={user.id === userId ? "blue" : "white"}
+                      inverted={sender.id === userId}
+                      color={sender.id === userId ? "blue" : "white"}
                     >
                       <Header size="tiny" textAlign="left">
                         {message}
@@ -183,12 +229,18 @@ class Messages extends Component<Props, State> {
               ))}
             </List>
             <Divider />
-            <input
-              type="text"
+            <Input
+              size="large"
               value={value}
               onChange={({ target: { value } }) => this.setState({ value })}
             />
-            <Button onClick={this.handleSendMessage}>Send message</Button>
+            <Button
+              size="large"
+              disabled={!value.trim()}
+              onClick={this.handleSendMessage}
+            >
+              Send message
+            </Button>
           </Segment>
         </Grid.Column>
       </Grid>

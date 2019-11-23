@@ -3,12 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     "Message",
     {
       message: DataTypes.STRING,
-      userId: DataTypes.INTEGER
+      senderId: DataTypes.INTEGER,
+      receiverId: DataTypes.INTEGER
     },
     {}
   );
-  Message.associate = function(models) {
-    models.User.hasMany(models.Message, { foreignKey: "userId" });
+  Message.associate = models => {
+    models.Message.belongsTo(models.User, {
+      as: "sender",
+      foreignKey: "senderId"
+    });
+    models.Message.belongsTo(models.User, {
+      as: "receiver",
+      foreignKey: "receiverId"
+    });
   };
 
   return Message;
