@@ -23,6 +23,20 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.date-message {
+  font-size: 10px;
+  padding-left: 40px;
+  text-align: right;
+}
+
+.messages-list .ui.segment {
+  padding: 0.3em 0.5em;
 }
